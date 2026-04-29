@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>LSFD | Пожарный калькулятор отчетности</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Убираем стрелки у всех полей type="number" */
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  body {
+    background: radial-gradient(circle at 20% 30%, #0b0c10, #030507);
+    font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, -apple-system, 'Roboto', sans-serif;
+    color: #f0f3f8;
+    padding: 2rem 1rem;
+    position: relative;
+  }
+
+  /* легкий пожарный градиент на краях */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background: repeating-linear-gradient(45deg, rgba(255, 60, 30, 0.02) 0px, rgba(255, 60, 30, 0.02) 2px, transparent 2px, transparent 8px);
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1020px;
+    margin: 0 auto;
+    background: rgba(12, 15, 22, 0.75);
+    backdrop-filter: blur(3px);
+    border-radius: 2rem;
+    padding: 1.8rem 2rem 2.5rem;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 70, 40, 0.2);
+    transition: all 0.2s;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* шапка с эмблемой */
+  .header-lsfd {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 1.8rem;
+    border-bottom: 2px solid #e64a2e;
+    padding-bottom: 0.75rem;
+  }
+  h2 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, #ffb347, #ff5e3a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  h2:before {
+    content: "🔥";
+    font-size: 2rem;
+    background: none;
+    -webkit-background-clip: unset;
+    color: #ff784b;
+    text-shadow: 0 0 5px #ff4d1e;
+  }
+  .role-wrap {
+    background: #1e232f;
+    padding: 0.25rem 0.75rem;
+    border-radius: 60px;
+    border-left: 4px solid #e64a2e;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .role-wrap label {
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+  select {
+    background: #0f111a;
+    border: 1px solid #e6583a;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  select:hover {
+    background: #2a1f1a;
+    border-color: #ff6a48;
+  }
+
+  /* сетка карточек */
+  .cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin: 2rem 0 1.8rem;
+  }
+  .card {
+    background: rgba(20, 24, 34, 0.8);
+    backdrop-filter: blur(2px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(230, 80, 50, 0.35);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .card-header {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 1rem 1.5rem;
+    border-left: 8px solid #e64a2e;
+    border-bottom: 1px solid rgba(230, 74, 46, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .card-header h3 {
+    font-size: 1.45rem;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+  .tag {
+    font-size: 0.7rem;
+    background: #2a2220;
+    padding: 4px 12px;
+    border-radius: 40px;
+    color: #ffb085;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+  }
+  .card-body {
+    padding: 1.2rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .input-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #0e111b70;
+    padding: 0.3rem 0.8rem;
+    border-radius: 60px;
+    transition: 0.1s;
+  }
+  .input-row label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    flex: 2;
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .input-row input {
+    flex: 1.2;
+    background: #01010140;
+    border: 1px solid #aa4a32;
+    border-radius: 36px;
+    padding: 8px 14px;
+    color: #fff3e8;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: 0.2s;
+    outline: none;
+  }
+  .input-row input:focus {
+    border-color: #ff7a4f;
+    box-shadow: 0 0 0 2px rgba(230, 74, 46, 0.4);
+    background: #1a1e2c;
+  }
+  .small-note {
+    font-size: 0.7rem;
+    opacity: 0.7;
+    margin-left: 4px;
+  }
+  button {
+    width: 100%;
+    background: linear-gradient(95deg, #c93c1e, #e65932);
+    border: none;
+    padding: 1rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 60px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    transition: 0.2s;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 12px rgba(200, 60, 30, 0.3);
+  }
+  button:hover {
+    background: linear-gradient(95deg, #e04a28, #ff6a42);
+    transform: scale(1.01);
+    box-shadow: 0 8px 18px rgba(230, 70, 40, 0.5);
+  }
+  .result {
+    background: #070a10cc;
+    backdrop-filter: blur(12px);
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    margin-top: 0.8rem;
+    border: 1px solid #ff5938;
+    font-family: monospace;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  }
+  .result span {
+    font-weight: 700;
+    color: #ffa270;
+  }
+  hr {
+    border-color: #e64a2e30;
+    margin: 0.5rem 0;
+  }
+  .hidden {
+    display: none;
+  }
+  .fire-icon {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 0 2px #ff5e2e);
+  }
+  @media (max-width: 650px) {
+    .container {
+      padding: 1.2rem;
+    }
+    .input-row {
+      flex-direction: column;
+      align-items: stretch;
+      background: transparent;
+      padding: 0.5rem 0;
+      border-radius: 0;
+      border-bottom: 1px solid #2c2f3a;
+    }
+    .input-row input {
+      width: 100%;
+    }
+    .card-header h3 {
+      font-size: 1.25rem;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+  .badge-lsfd {
+    display: inline-block;
+    background: #e64a2e20;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    margin-left: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header-lsfd">
+    <h2>LSFD · ОТЧЕТНЫЙ КАЛЬКУЛЯТОР</h2>
+    <div class="role-wrap">
+      <span>🚒 Роль</span>
+      <select id="role" onchange="toggleRole()">
+        <option value="staff">👨‍🚒 Средний состав</option>
+        <option value="inst">🎓 Инструкторский состав</option>
+      </select>
+    </div>
+  </div>
+  
+  <div class="cards-grid">
+    <!-- ПОЖАРНАЯ СЕКЦИЯ -->
+    <div class="card">
+      <div class="card-header">
+        <h3>🔥 Пожарная деятельность</h3>
+        <span class="tag">📸 Фотофиксация обязательна</span>
+      </div>
+      <div class="card-body">
+        <div class="input-row"><label>🏙️ Город (×3)</label><input type="number" inputmode="numeric" id="fire_city" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>🏭 Фабрика (×5)</label><input type="number" inputmode="numeric" id="fire_factory" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>🌲 Округ (×5)</label><input type="number" inputmode="numeric" id="fire_area" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>🪵 Лесопилка (×7)</label><input type="number" inputmode="numeric" id="fire_sawmill" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>✅ Проверка присутствие (×40)</label><input type="number" inputmode="numeric" id="check_presence" placeholder="Количество сообщений"></div>
+        <div class="input-row"><label>📋 Проведение проверки (×50)</label><input type="number" inputmode="numeric" id="check_run" placeholder="Количество сообщений"></div>
+        <div class="input-row"><label>🏋️ Тренировка (×20)</label><input type="number" inputmode="numeric" id="train" placeholder="Количество сообщений"></div>
+        <div class="input-row"><label>⭐ Доп. баллы тренировки</label><input type="number" inputmode="numeric" id="train_extra" placeholder="Количество баллов"></div>
+      </div>
+    </div>
+
+    <!-- МЕДИЦИНА -->
+    <div class="card">
+      <div class="card-header"><h3>💊 Медицинские услуги</h3><span class="tag">📸 скрины</span></div>
+      <div class="card-body">
+        <div class="input-row"><label>🚑 ПМП (день) ×3</label><input type="number" inputmode="numeric" id="pmp"></div> 
+        <div class="input-row"><label>🌙 ПМП (ночь) ×4</label><input type="number" inputmode="numeric" id="pmp_night"></div>
+      </div>
+    </div>
+
+    <!-- ПРОЧЕЕ (таблетки, вакцины) -->
+    <div class="card">
+      <div class="card-header"><h3>💉 Фармацевтика & карты</h3><span class="tag">скрины</span></div>
+      <div class="card-body">
+        <div class="input-row"><label>💊 Таблетки ELSH (×1)</label><input id="pill1" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>💊 Таблетки Сенди/Палето (×2)</label><input id="pill2" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>🧪 Вакцины ELSH (×1)</label><input id="vac1" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>🧪 Вакцины Сенди/Палето (×2)</label><input id="vac2" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>📇 Мед. карты ELSH (×2)</label><input id="card1" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>📇 Мед. карты Сенди/Палето (×3)</label><input id="card2" type="number" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <!-- АКТИВНОСТИ -->
+    <div class="card">
+      <div class="card-header"><h3>📚 Активности & обучение</h3><span class="tag">📸 скриншоты</span></div>
+      <div class="card-body">
+        <div class="input-row"><label>🎓 Квалификация (×50)</label><input id="qual" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>🎭 RP работа (×50)</label><input id="rp" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>🗣️ Собеседования (×20)</label><input id="interview" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>📖 Лекции (×10)</label><input id="lecture" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>🏅 Мероприятия (×50)</label><input id="event" type="number" inputmode="numeric"></div>
+      </div>
+    </div>
+
+    <!-- ДЕЖУРСТВО минуты -->
+    <div class="card">
+      <div class="card-header"><h3>⏱ Дежурство (минуты → авто-баллы)</h3><span class="tag">учет каждые 30 мин</span></div>
+      <div class="card-body">
+        <div class="input-row"><label>🚒 ELSH (минуты)</label><input id="duty1" type="number" inputmode="numeric" placeholder="мин"></div>
+        <div class="input-row"><label>🛡️ S&S (минуты)</label><input id="duty2" type="number" inputmode="numeric" placeholder="мин"></div>
+      </div>
+    </div>
+
+    <!-- ОБЕД для STAFF -->
+    <div id="staff_lunch_block">
+      <div class="card">
+        <div class="card-header"><h3>🍽 Обед + доп баллы</h3><span class="tag">⭐ дополнительные баллы</span></div>
+        <div class="card-body">
+          <div class="input-row"><label>⭐ Баллы за обед / бонусы</label><input id="lunch_staff" type="number" inputmode="numeric" placeholder="введите сумму"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- БЛОК ИНСТРУКТОРА (скрыт по умолчанию) -->
+    <div id="inst_block" class="hidden">
+      <div class="card">
+        <div class="card-header"><h3>👨‍🚒 Инструкторская деятельность</h3><span class="tag">📸 фотоотчет</span></div>
+        <div class="card-body">
+          <div class="input-row"><label>📄 Проверка отчёта (×20)</label><input id="inst_check_report" type="number" inputmode="numeric"></div>
+          <div class="input-row"><label>🎙️ Инструктаж (×35)</label><input id="inst_briefing" type="number" inputmode="numeric"></div>
+          <div class="input-row"><label>🔍 Проведение проверки (×50)</label><input id="inst_check_run" type="number" inputmode="numeric"></div>
+          <div class="input-row"><label>🏋️ Проведение тренировки (×40)</label><input id="inst_training" type="number" inputmode="numeric"></div>
+          <div class="input-row"><label>👨‍🎓 Обучение стажера (×20)</label><input id="inst_intern" type="number" inputmode="numeric"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h3>🍽 Обед (инструктор)</h3><span class="tag">⭐ доп баллы</span></div>
+        <div class="card-body">
+          <div class="input-row"><label>⭐ Баллы обеда/бонус</label><input id="lunch_inst" type="number" inputmode="numeric"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button onclick="calc()">🧯 РАССЧИТАТЬ ОТЧЕТ 🧯</button>
+  <div class="result" id="res">
+    🔥 Пожарка: 0<br>📊 Остальное: 0<br>⏱ Дежурство: 0<br>👨‍🚒 Инструктор: 0<br>🍽 Обед+доп: 0<br><br>💯 ИТОГО: 0<br><br>✅ Введите данные и нажмите Рассчитать
+  </div>
+</div>
+
+<script>
+function get(id){
+    return +document.getElementById(id).value || 0;
+}
+
+function duty(min, rate){
+    return Math.floor(min / 30) * rate;
+}
+
+function toggleRole(){
+    let role = document.getElementById("role").value;
+
+    document.getElementById("inst_block")
+        .classList.toggle("hidden", role !== "inst");
+
+    document.getElementById("staff_lunch_block")
+        .classList.toggle("hidden", role !== "staff");
+}
+
+function calc(){
+
+let role = document.getElementById("role").value;
+
+// 🔥 пожарка
+let fire =
+get("fire_city") * 3 +
+get("fire_factory") * 5 +
+get("fire_area") * 5 +
+get("fire_sawmill") * 7 +
+get("check_presence") * 40 +
+get("check_run") * 50 +
+get("train") * 20 +
+get("train_extra");
+
+// 💊 остальное (медицина + прочее + активности)
+let other =
+get("pmp") * 3 +
+get("pmp_night") * 4 +
+get("pill1") * 1 +
+get("pill2") * 2 +
+get("vac1") * 1 +
+get("vac2") * 2 +
+get("card1") * 2 +
+get("card2") * 3 +
+get("qual") * 50 +
+get("rp") * 50 +
+get("interview") * 20 +
+get("lecture") * 10 +
+get("event") * 50;
+
+// ⏱ дежурство
+let duty_points =
+duty(get("duty1"), 20) +
+duty(get("duty2"), 30);
+
+// 👨‍🚒 инструктор
+let inst =
+get("inst_check_report") * 20 +
+get("inst_briefing") * 35 +
+get("inst_check_run") * 50 +
+get("inst_training") * 40 +
+get("inst_intern") * 20;
+
+// 🍽 обед
+let lunch = (role === "staff")
+    ? get("lunch_staff")
+    : get("lunch_inst");
+
+// итог
+let total = fire + other + duty_points + inst + lunch;
+
+// проверки
+let presence = get("check_presence");
+let run = get("check_run");
+let inst_run = get("inst_check_run");
+
+// ошибки
+let errors = [];
+
+if(role === "staff"){
+    if(total < 500) errors.push("⚠️ Мало баллов для сдачи отчета (минимум 500)");
+    if(fire < 300) errors.push("⚠️ Недостаточно пожарных баллов (нужно ≥300)");
+
+    if(presence + run < 2)
+        errors.push("⚠️ Требуется минимум 2 проверки (присутствие/проведение)");
+}
+
+if(role === "inst"){
+    if(total < 550) errors.push("⚠️ Мало баллов инструктора (требуется ≥550)");
+    if(fire < 400) errors.push("⚠️ Мало пожарных баллов для инструктора (нужно ≥400)");
+
+    if(presence + run + inst_run < 2)
+        errors.push("⚠️ Нужно минимум 2 проверки (присутствие / проведение / инструкторская проверка)");
+
+    if(get("inst_training") < 1)
+        errors.push("⚠️ Инструктор обязан провести тренировку (минимум 1)");
+
+    if(inst < 120)
+        errors.push("⚠️ Недостаточно инструкторских баллов (минимум 120)");
+}
+
+let ok = errors.length === 0;
+
+let resultHtml = 
+`<span style="font-size:1.05rem;">🔥 Пожарная деятельность:</span> <strong style="color:#ff9966;">${fire} баллов</strong><br>
+<span>📊 Медицина + Прочее + Активности:</span> <strong>${other} баллов</strong><br>
+<span>⏱ Дежурство (ELSH/S&S):</span> <strong>${duty_points} баллов</strong><br>
+<span>👨‍🚒 Инструкторская часть:</span> <strong>${inst} баллов</strong><br>
+<span>🍽 Обед + дополнительные баллы:</span> <strong>${lunch} баллов</strong><br>
+<hr style="margin:12px 0; border-color:#ff6a48;">
+<span style="font-size:1.2rem;">💯 ИТОГОВЫЙ БАЛЛ:</span> <strong style="font-size:1.5rem; color:#ffaa77;">${total}</strong><br><br>`;
+
+if(ok){
+    resultHtml += `<div style="background:#1e5a2e60; border-left: 6px solid #47d47c; padding:12px 16px; border-radius:20px;">✅ <strong style="color:#b3ffcf;">ОТЧЕТ ГОТОВ К СДАЧЕ</strong><br>Все критерии выполнены, баллы соответствуют нормативам LSFD.</div>`;
+} else {
+    resultHtml += `<div style="background:#3a1710; border-left: 6px solid #e64a2e; padding:12px 16px; border-radius:20px;">❌ <strong style="color:#ff8a6f;">Ошибки / недочеты:</strong><br>${errors.join("<br>")}</div>`;
+}
+
+document.getElementById("res").innerHTML = resultHtml;
+}
+
+toggleRole();
+</script>
+</body>
+</html>
