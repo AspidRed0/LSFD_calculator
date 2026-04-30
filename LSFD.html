@@ -30,7 +30,6 @@
     position: relative;
   }
 
-  /* легкий пожарный градиент на краях */
   body::before {
     content: "";
     position: fixed;
@@ -56,7 +55,6 @@
     z-index: 2;
   }
 
-  /* шапка с эмблемой */
   .header-lsfd {
     display: flex;
     align-items: baseline;
@@ -117,7 +115,6 @@
     border-color: #ff6a48;
   }
 
-  /* сетка карточек */
   .cards-grid {
     display: flex;
     flex-direction: column;
@@ -201,11 +198,6 @@
     box-shadow: 0 0 0 2px rgba(230, 74, 46, 0.4);
     background: #1a1e2c;
   }
-  .small-note {
-    font-size: 0.7rem;
-    opacity: 0.7;
-    margin-left: 4px;
-  }
   button {
     width: 100%;
     background: linear-gradient(95deg, #c93c1e, #e65932);
@@ -233,6 +225,7 @@
     border-radius: 1.5rem;
     padding: 1.5rem;
     margin-top: 0.8rem;
+    margin-bottom: 2rem;
     border: 1px solid #ff5938;
     font-family: monospace;
     font-size: 1rem;
@@ -251,10 +244,103 @@
   .hidden {
     display: none;
   }
-  .fire-icon {
-    font-size: 1.1rem;
-    filter: drop-shadow(0 0 2px #ff5e2e);
+  
+  /* Стили для таблицы лучшего сотрудника недели */
+  .best-employee-section {
+    margin-top: 0;
   }
+  
+  .employee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .employee-table th,
+  .employee-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid rgba(230, 74, 46, 0.3);
+  }
+  
+  .employee-table th {
+    background: rgba(230, 74, 46, 0.2);
+    color: #ffa270;
+    font-weight: bold;
+  }
+  
+  .employee-table tr:hover {
+    background: rgba(230, 74, 46, 0.1);
+  }
+  
+  .employee-table input {
+    width: 100%;
+    background: #0f111a;
+    border: 1px solid #aa4a32;
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: white;
+    font-size: 0.85rem;
+  }
+  
+  .employee-table input:focus {
+    outline: none;
+    border-color: #ff7a4f;
+    box-shadow: 0 0 0 2px rgba(230, 74, 46, 0.4);
+  }
+  
+  .best-employee-result {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #1e5a2e60;
+    border-radius: 1rem;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .best-employee-name {
+    font-size: 1.5rem;
+    color: #ffaa77;
+    font-weight: bold;
+  }
+  
+  .best-score {
+    font-size: 1.2rem;
+    color: #ffdaaa;
+  }
+  
+  .winner-crown {
+    font-size: 2rem;
+    display: inline-block;
+    animation: pulse 1s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  .calc-best-btn {
+    background: linear-gradient(95deg, #f39c12, #e67e22);
+    margin-top: 0;
+  }
+  
+  .calc-best-btn:hover {
+    background: linear-gradient(95deg, #f1c40f, #e67e22);
+  }
+  
   @media (max-width: 650px) {
     .container {
       padding: 1.2rem;
@@ -276,14 +362,15 @@
     h2 {
       font-size: 1.5rem;
     }
-  }
-  .badge-lsfd {
-    display: inline-block;
-    background: #e64a2e20;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    padding: 2px 8px;
-    margin-left: 6px;
+    .employee-table th,
+    .employee-table td {
+      padding: 6px;
+      font-size: 0.8rem;
+    }
+    .employee-table input {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+    }
   }
 </style>
 </head>
@@ -397,9 +484,126 @@
   <div class="result" id="res">
     🔥 Пожарка: 0<br>📊 Остальное: 0<br>⏱ Дежурство: 0<br>👨‍🚒 Инструктор: 0<br>🍽 Обед+доп: 0<br><br>💯 ИТОГО: 0<br><br>✅ Введите данные и нажмите Рассчитать
   </div>
+
+  <!-- НОВАЯ СЕКЦИЯ: ЛУЧШИЙ СОТРУДНИК НЕДЕЛИ -->
+  <div class="best-employee-section">
+    <div class="card">
+      <div class="card-header">
+        <h3>🏆 Лучший сотрудник недели</h3>
+        <span class="tag">таблица на 18 сотрудников</span>
+      </div>
+      <div class="card-body">
+        <!-- Таблица -->
+        <table class="employee-table" id="employeeTable">
+          <thead>
+            <tr><th>👤 Имя сотрудника</th><th>⭐ Баллы</th></tr>
+          </thead>
+          <tbody id="employeeTableBody">
+            <!-- 18 строк будут сгенерированы через JS -->
+          </tbody>
+        </table>
+        
+        <!-- Только одна кнопка -->
+        <button class="calc-best-btn" onclick="calculateBestEmployee()">🏆 РАССЧИТАТЬ ЛУЧШЕГО 🏆</button>
+        
+        <!-- Результат -->
+        <div id="bestEmployeeResult" class="best-employee-result hidden">
+          <div class="winner-crown">👑</div>
+          <div>Лучший сотрудник недели:</div>
+          <div class="best-employee-name" id="winnerName">—</div>
+          <div class="best-score" id="winnerScore">0 баллов</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
+// Функции для работы с таблицей сотрудников
+const EMPLOYEE_ROWS = 18;
+
+function createEmployeeTable() {
+  const tbody = document.getElementById('employeeTableBody');
+  if (!tbody) return;
+  
+  tbody.innerHTML = '';
+  for (let i = 0; i < EMPLOYEE_ROWS; i++) {
+    const row = tbody.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.placeholder = `Сотрудник ${i + 1}`;
+    nameInput.id = `emp_name_${i}`;
+    nameInput.autocomplete = 'off';
+    
+    const scoreInput = document.createElement('input');
+    scoreInput.type = 'number';
+    scoreInput.placeholder = '0';
+    scoreInput.id = `emp_score_${i}`;
+    scoreInput.value = '0';
+    
+    cell1.appendChild(nameInput);
+    cell2.appendChild(scoreInput);
+  }
+}
+
+function getEmployeeData() {
+  const employees = [];
+  for (let i = 0; i < EMPLOYEE_ROWS; i++) {
+    const nameInput = document.getElementById(`emp_name_${i}`);
+    const scoreInput = document.getElementById(`emp_score_${i}`);
+    const name = nameInput ? nameInput.value.trim() : '';
+    const score = scoreInput ? (parseInt(scoreInput.value) || 0) : 0;
+    
+    if (name) {
+      employees.push({ name, score });
+    }
+  }
+  return employees;
+}
+
+function calculateBestEmployee() {
+  const employees = getEmployeeData();
+  
+  if (employees.length === 0) {
+    alert('❌ Нет данных о сотрудниках! Заполните таблицу.');
+    return;
+  }
+  
+  let bestEmployee = null;
+  let maxScore = -1;
+  
+  for (const emp of employees) {
+    if (emp.score > maxScore) {
+      maxScore = emp.score;
+      bestEmployee = emp;
+    }
+  }
+  
+  const resultDiv = document.getElementById('bestEmployeeResult');
+  const winnerNameSpan = document.getElementById('winnerName');
+  const winnerScoreSpan = document.getElementById('winnerScore');
+  
+  if (bestEmployee && maxScore > 0) {
+    winnerNameSpan.textContent = bestEmployee.name;
+    winnerScoreSpan.textContent = `${bestEmployee.score} баллов`;
+    resultDiv.classList.remove('hidden');
+    
+    // Прокрутка к результату
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    
+  } else if (bestEmployee && maxScore === 0) {
+    winnerNameSpan.textContent = bestEmployee.name;
+    winnerScoreSpan.textContent = `0 баллов (нужно больше активности!)`;
+    resultDiv.classList.remove('hidden');
+  } else {
+    alert('❌ Нет сотрудников с положительными баллами!');
+  }
+}
+
+// Остальные функции
 function get(id){
     return +document.getElementById(id).value || 0;
 }
@@ -419,107 +623,96 @@ function toggleRole(){
 }
 
 function calc(){
+  let role = document.getElementById("role").value;
 
-let role = document.getElementById("role").value;
+  let fire =
+  get("fire_city") * 3 +
+  get("fire_factory") * 5 +
+  get("fire_area") * 5 +
+  get("fire_sawmill") * 7 +
+  get("check_presence") * 40 +
+  get("check_run") * 50 +
+  get("train") * 20 +
+  get("train_extra");
 
-// 🔥 пожарка
-let fire =
-get("fire_city") * 3 +
-get("fire_factory") * 5 +
-get("fire_area") * 5 +
-get("fire_sawmill") * 7 +
-get("check_presence") * 40 +
-get("check_run") * 50 +
-get("train") * 20 +
-get("train_extra");
+  let other =
+  get("pmp") * 3 +
+  get("pmp_night") * 4 +
+  get("pill1") * 1 +
+  get("pill2") * 2 +
+  get("vac1") * 1 +
+  get("vac2") * 2 +
+  get("card1") * 2 +
+  get("card2") * 3 +
+  get("qual") * 50 +
+  get("rp") * 50 +
+  get("interview") * 20 +
+  get("lecture") * 10 +
+  get("event") * 50;
 
-// 💊 остальное (медицина + прочее + активности)
-let other =
-get("pmp") * 3 +
-get("pmp_night") * 4 +
-get("pill1") * 1 +
-get("pill2") * 2 +
-get("vac1") * 1 +
-get("vac2") * 2 +
-get("card1") * 2 +
-get("card2") * 3 +
-get("qual") * 50 +
-get("rp") * 50 +
-get("interview") * 20 +
-get("lecture") * 10 +
-get("event") * 50;
+  let duty_points =
+  duty(get("duty1"), 20) +
+  duty(get("duty2"), 30);
 
-// ⏱ дежурство
-let duty_points =
-duty(get("duty1"), 20) +
-duty(get("duty2"), 30);
+  let inst =
+  get("inst_check_report") * 20 +
+  get("inst_briefing") * 35 +
+  get("inst_check_run") * 50 +
+  get("inst_training") * 40 +
+  get("inst_intern") * 20;
 
-// 👨‍🚒 инструктор
-let inst =
-get("inst_check_report") * 20 +
-get("inst_briefing") * 35 +
-get("inst_check_run") * 50 +
-get("inst_training") * 40 +
-get("inst_intern") * 20;
+  let lunch = (role === "staff")
+      ? get("lunch_staff")
+      : get("lunch_inst");
 
-// 🍽 обед
-let lunch = (role === "staff")
-    ? get("lunch_staff")
-    : get("lunch_inst");
+  let total = fire + other + duty_points + inst + lunch;
 
-// итог
-let total = fire + other + duty_points + inst + lunch;
+  let presence = get("check_presence");
+  let run = get("check_run");
+  let inst_run = get("inst_check_run");
 
-// проверки
-let presence = get("check_presence");
-let run = get("check_run");
-let inst_run = get("inst_check_run");
+  let errors = [];
 
-// ошибки
-let errors = [];
+  if(role === "staff"){
+      if(total < 500) errors.push("⚠️ Мало баллов для сдачи отчета (минимум 500)");
+      if(fire < 300) errors.push("⚠️ Недостаточно пожарных баллов (нужно ≥300)");
+      if(presence + run < 2)
+          errors.push("⚠️ Требуется минимум 2 проверки (присутствие/проведение)");
+  }
 
-if(role === "staff"){
-    if(total < 500) errors.push("⚠️ Мало баллов для сдачи отчета (минимум 500)");
-    if(fire < 300) errors.push("⚠️ Недостаточно пожарных баллов (нужно ≥300)");
+  if(role === "inst"){
+      if(total < 550) errors.push("⚠️ Мало баллов инструктора (требуется ≥550)");
+      if(fire < 400) errors.push("⚠️ Мало пожарных баллов для инструктора (нужно ≥400)");
+      if(presence + run + inst_run < 2)
+          errors.push("⚠️ Нужно минимум 2 проверки (присутствие / проведение / инструкторская проверка)");
+      if(get("inst_training") < 1)
+          errors.push("⚠️ Инструктор обязан провести тренировку (минимум 1)");
+      if(inst < 120)
+          errors.push("⚠️ Недостаточно инструкторских баллов (минимум 120)");
+  }
 
-    if(presence + run < 2)
-        errors.push("⚠️ Требуется минимум 2 проверки (присутствие/проведение)");
+  let ok = errors.length === 0;
+
+  let resultHtml = 
+  `<span style="font-size:1.05rem;">🔥 Пожарная деятельность:</span> <strong style="color:#ff9966;">${fire} баллов</strong><br>
+  <span>📊 Медицина + Прочее + Активности:</span> <strong>${other} баллов</strong><br>
+  <span>⏱ Дежурство (ELSH/S&S):</span> <strong>${duty_points} баллов</strong><br>
+  <span>👨‍🚒 Инструкторская часть:</span> <strong>${inst} баллов</strong><br>
+  <span>🍽 Обед + дополнительные баллы:</span> <strong>${lunch} баллов</strong><br>
+  <hr style="margin:12px 0; border-color:#ff6a48;">
+  <span style="font-size:1.2rem;">💯 ИТОГОВЫЙ БАЛЛ:</span> <strong style="font-size:1.5rem; color:#ffaa77;">${total}</strong><br><br>`;
+
+  if(ok){
+      resultHtml += `<div style="background:#1e5a2e60; border-left: 6px solid #47d47c; padding:12px 16px; border-radius:20px;">✅ <strong style="color:#b3ffcf;">ОТЧЕТ ГОТОВ К СДАЧЕ</strong><br>Все критерии выполнены, баллы соответствуют нормативам LSFD.</div>`;
+  } else {
+      resultHtml += `<div style="background:#3a1710; border-left: 6px solid #e64a2e; padding:12px 16px; border-radius:20px;">❌ <strong style="color:#ff8a6f;">Ошибки / недочеты:</strong><br>${errors.join("<br>")}</div>`;
+  }
+
+  document.getElementById("res").innerHTML = resultHtml;
 }
 
-if(role === "inst"){
-    if(total < 550) errors.push("⚠️ Мало баллов инструктора (требуется ≥550)");
-    if(fire < 400) errors.push("⚠️ Мало пожарных баллов для инструктора (нужно ≥400)");
-
-    if(presence + run + inst_run < 2)
-        errors.push("⚠️ Нужно минимум 2 проверки (присутствие / проведение / инструкторская проверка)");
-
-    if(get("inst_training") < 1)
-        errors.push("⚠️ Инструктор обязан провести тренировку (минимум 1)");
-
-    if(inst < 120)
-        errors.push("⚠️ Недостаточно инструкторских баллов (минимум 120)");
-}
-
-let ok = errors.length === 0;
-
-let resultHtml = 
-`<span style="font-size:1.05rem;">🔥 Пожарная деятельность:</span> <strong style="color:#ff9966;">${fire} баллов</strong><br>
-<span>📊 Медицина + Прочее + Активности:</span> <strong>${other} баллов</strong><br>
-<span>⏱ Дежурство (ELSH/S&S):</span> <strong>${duty_points} баллов</strong><br>
-<span>👨‍🚒 Инструкторская часть:</span> <strong>${inst} баллов</strong><br>
-<span>🍽 Обед + дополнительные баллы:</span> <strong>${lunch} баллов</strong><br>
-<hr style="margin:12px 0; border-color:#ff6a48;">
-<span style="font-size:1.2rem;">💯 ИТОГОВЫЙ БАЛЛ:</span> <strong style="font-size:1.5rem; color:#ffaa77;">${total}</strong><br><br>`;
-
-if(ok){
-    resultHtml += `<div style="background:#1e5a2e60; border-left: 6px solid #47d47c; padding:12px 16px; border-radius:20px;">✅ <strong style="color:#b3ffcf;">ОТЧЕТ ГОТОВ К СДАЧЕ</strong><br>Все критерии выполнены, баллы соответствуют нормативам LSFD.</div>`;
-} else {
-    resultHtml += `<div style="background:#3a1710; border-left: 6px solid #e64a2e; padding:12px 16px; border-radius:20px;">❌ <strong style="color:#ff8a6f;">Ошибки / недочеты:</strong><br>${errors.join("<br>")}</div>`;
-}
-
-document.getElementById("res").innerHTML = resultHtml;
-}
-
+// Инициализация
+createEmployeeTable();
 toggleRole();
 </script>
 </body>
