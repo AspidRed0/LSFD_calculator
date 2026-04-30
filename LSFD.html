@@ -428,15 +428,14 @@
       </div>
     </div>
 
-    <!-- АКТИВНОСТИ -->
+    <!-- АКТИВНОСТИ & ОБУЧЕНИЕ (Лекции и Мероприятия удалены) -->
     <div class="card">
       <div class="card-header"><h3>📚 Активности & обучение</h3><span class="tag">📸 скриншоты</span></div>
       <div class="card-body">
-        <div class="input-row"><label>🎓 Квалификация (×50)</label><input id="qual" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>🎓 Получение квалификации (×50)</label><input id="qual" type="number" inputmode="numeric"></div>
         <div class="input-row"><label>🎭 RP работа (×50)</label><input id="rp" type="number" inputmode="numeric"></div>
         <div class="input-row"><label>🗣️ Собеседования (×20)</label><input id="interview" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>📖 Лекции (×10)</label><input id="lecture" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>🏅 Мероприятия (×50)</label><input id="event" type="number" inputmode="numeric"></div>
+        <!-- Пункты "Лекции (×10)" и "Мероприятия (×50)" полностью удалены -->
       </div>
     </div>
 
@@ -452,9 +451,9 @@
     <!-- ОБЕД для STAFF -->
     <div id="staff_lunch_block">
       <div class="card">
-        <div class="card-header"><h3>🍽 Обед + доп баллы</h3><span class="tag">⭐ дополнительные баллы</span></div>
+        <div class="card-header"><h3>🍽 Обед + доп. баллы</h3><span class="tag">⭐ дополнительные баллы</span></div>
         <div class="card-body">
-          <div class="input-row"><label>⭐ Баллы за обед / бонусы</label><input id="lunch_staff" type="number" inputmode="numeric" placeholder="введите сумму"></div>
+          <div class="input-row"><label>⭐ Баллы за обед + доп. баллы</label><input id="lunch_staff" type="number" inputmode="numeric" placeholder="введите сумму"></div>
         </div>
       </div>
     </div>
@@ -635,6 +634,7 @@ function calc(){
   get("train") * 20 +
   get("train_extra");
 
+  // Внимание: лекции (lecture) и мероприятия (event) удалены из раздела активностей
   let other =
   get("pmp") * 3 +
   get("pmp_night") * 4 +
@@ -646,9 +646,8 @@ function calc(){
   get("card2") * 3 +
   get("qual") * 50 +
   get("rp") * 50 +
-  get("interview") * 20 +
-  get("lecture") * 10 +
-  get("event") * 50;
+  get("interview") * 20;
+  // Лекции (×10) и Мероприятия (×50) полностью исключены из расчетов
 
   let duty_points =
   duty(get("duty1"), 20) +
@@ -695,7 +694,7 @@ function calc(){
 
   let resultHtml = 
   `<span style="font-size:1.05rem;">🔥 Пожарная деятельность:</span> <strong style="color:#ff9966;">${fire} баллов</strong><br>
-  <span>📊 Медицина + Прочее + Активности:</span> <strong>${other} баллов</strong><br>
+  <span>📊 Медицина + Прочее + Активности (квалификация, RP, собеседования):</span> <strong>${other} баллов</strong><br>
   <span>⏱ Дежурство (ELSH/S&S):</span> <strong>${duty_points} баллов</strong><br>
   <span>👨‍🚒 Инструкторская часть:</span> <strong>${inst} баллов</strong><br>
   <span>🍽 Обед + дополнительные баллы:</span> <strong>${lunch} баллов</strong><br>
