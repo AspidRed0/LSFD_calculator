@@ -11,7 +11,6 @@
     box-sizing: border-box;
   }
 
-  /* Убираем стрелки у всех полей type="number" */
   input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
@@ -50,7 +49,6 @@
     border-radius: 2rem;
     padding: 1.8rem 2rem 2.5rem;
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(230, 70, 40, 0.2);
-    transition: all 0.2s;
     position: relative;
     z-index: 2;
   }
@@ -72,7 +70,6 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     display: inline-flex;
     align-items: center;
     gap: 12px;
@@ -83,7 +80,6 @@
     background: none;
     -webkit-background-clip: unset;
     color: #ff784b;
-    text-shadow: 0 0 5px #ff4d1e;
   }
   .role-wrap {
     background: #1e232f;
@@ -108,7 +104,6 @@
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
-    transition: 0.2s;
   }
   select:hover {
     background: #2a1f1a;
@@ -126,9 +121,7 @@
     backdrop-filter: blur(2px);
     border-radius: 1.5rem;
     border: 1px solid rgba(230, 80, 50, 0.35);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-    transition: all 0.2s;
   }
   .card-header {
     background: rgba(0, 0, 0, 0.4);
@@ -143,8 +136,6 @@
   .card-header h3 {
     font-size: 1.45rem;
     font-weight: 600;
-    margin: 0;
-    letter-spacing: -0.3px;
   }
   .tag {
     font-size: 0.7rem;
@@ -152,8 +143,6 @@
     padding: 4px 12px;
     border-radius: 40px;
     color: #ffb085;
-    font-weight: 400;
-    letter-spacing: 0.3px;
   }
   .card-body {
     padding: 1.2rem 1.5rem 1.5rem;
@@ -170,7 +159,6 @@
     background: #0e111b70;
     padding: 0.3rem 0.8rem;
     border-radius: 60px;
-    transition: 0.1s;
   }
   .input-row label {
     font-weight: 500;
@@ -190,7 +178,6 @@
     color: #fff3e8;
     font-size: 0.9rem;
     font-weight: 500;
-    transition: 0.2s;
     outline: none;
   }
   .input-row input:focus {
@@ -212,12 +199,10 @@
     margin-bottom: 1rem;
     transition: 0.2s;
     letter-spacing: 1px;
-    box-shadow: 0 5px 12px rgba(200, 60, 30, 0.3);
   }
   button:hover {
     background: linear-gradient(95deg, #e04a28, #ff6a42);
     transform: scale(1.01);
-    box-shadow: 0 8px 18px rgba(230, 70, 40, 0.5);
   }
   .result {
     background: #070a10cc;
@@ -230,8 +215,6 @@
     font-family: monospace;
     font-size: 1rem;
     line-height: 1.5;
-    font-weight: 500;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
   }
   .result span {
     font-weight: 700;
@@ -245,7 +228,6 @@
     display: none;
   }
   
-  /* Стили для таблицы лучшего сотрудника недели */
   .best-employee-section {
     margin-top: 0;
   }
@@ -287,7 +269,6 @@
   .employee-table input:focus {
     outline: none;
     border-color: #ff7a4f;
-    box-shadow: 0 0 0 2px rgba(230, 74, 46, 0.4);
   }
   
   .best-employee-result {
@@ -296,18 +277,6 @@
     background: #1e5a2e60;
     border-radius: 1rem;
     text-align: center;
-    animation: fadeIn 0.5s ease;
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
   
   .best-employee-name {
@@ -340,6 +309,55 @@
   .calc-best-btn:hover {
     background: linear-gradient(95deg, #f1c40f, #e67e22);
   }
+
+  .table-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .small-btn {
+    background: #2a2e3f;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    margin: 0;
+    width: auto;
+    flex: 1;
+  }
+  
+  .small-btn:hover {
+    background: #3a3f55;
+    transform: none;
+  }
+  
+  .clear-scores-btn {
+    background: #8b5a2a;
+  }
+  
+  .clear-scores-btn:hover {
+    background: #aa6a3a;
+  }
+  
+  .del-btn {
+    background: #8b3a2a;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    margin: 0;
+    width: auto;
+    cursor: pointer;
+  }
+  
+  .del-btn:hover {
+    background: #aa4a3a;
+    transform: none;
+  }
+  
+  .save-status {
+    font-size: 0.75rem;
+    color: #6eff8e;
+    text-align: right;
+    margin-top: 5px;
+  }
   
   @media (max-width: 650px) {
     .container {
@@ -367,9 +385,8 @@
       padding: 6px;
       font-size: 0.8rem;
     }
-    .employee-table input {
-      font-size: 0.75rem;
-      padding: 4px 8px;
+    .table-controls {
+      flex-direction: column;
     }
   }
 </style>
@@ -380,7 +397,7 @@
     <h2>LSFD · ОТЧЕТНЫЙ КАЛЬКУЛЯТОР</h2>
     <div class="role-wrap">
       <span>🚒 Роль</span>
-      <select id="role" onchange="toggleRole()">
+      <select id="role">
         <option value="staff">👨‍🚒 Средний состав</option>
         <option value="inst">🎓 Инструкторский состав</option>
       </select>
@@ -395,14 +412,14 @@
         <span class="tag">📸 Фотофиксация обязательна</span>
       </div>
       <div class="card-body">
-        <div class="input-row"><label>🏙️ Город (×3)</label><input type="number" inputmode="numeric" id="fire_city" placeholder="Количество скринов"></div>
-        <div class="input-row"><label>🏭 Фабрика (×5)</label><input type="number" inputmode="numeric" id="fire_factory" placeholder="Количество скринов"></div>
-        <div class="input-row"><label>🌲 Округ (×5)</label><input type="number" inputmode="numeric" id="fire_area" placeholder="Количество скринов"></div>
-        <div class="input-row"><label>🪵 Лесопилка (×7)</label><input type="number" inputmode="numeric" id="fire_sawmill" placeholder="Количество скринов"></div>
-        <div class="input-row"><label>✅ Проверка присутствие (×40)</label><input type="number" inputmode="numeric" id="check_presence" placeholder="Количество сообщений"></div>
-        <div class="input-row"><label>📋 Проведение проверки (×50)</label><input type="number" inputmode="numeric" id="check_run" placeholder="Количество сообщений"></div>
-        <div class="input-row"><label>🏋️ Тренировка (×20)</label><input type="number" inputmode="numeric" id="train" placeholder="Количество сообщений"></div>
-        <div class="input-row"><label>⭐ Доп. баллы тренировки</label><input type="number" inputmode="numeric" id="train_extra" placeholder="Количество баллов"></div>
+        <div class="input-row"><label>🏙️ Город (×3)</label><input type="number" class="calc-input" id="fire_city" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>🏭 Фабрика (×5)</label><input type="number" class="calc-input" id="fire_factory" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>🌲 Округ (×5)</label><input type="number" class="calc-input" id="fire_area" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>🪵 Лесопилка (×7)</label><input type="number" class="calc-input" id="fire_sawmill" placeholder="Количество скринов"></div>
+        <div class="input-row"><label>✅ Проверка присутствие (×40)</label><input type="number" class="calc-input" id="check_presence" placeholder="Количество сообщений"></div>
+        <div class="input-row"><label>📋 Проведение проверки (×50)</label><input type="number" class="calc-input" id="check_run" placeholder="Количество сообщений"></div>
+        <div class="input-row"><label>🏋️ Тренировка (×20)</label><input type="number" class="calc-input" id="train" placeholder="Количество сообщений"></div>
+        <div class="input-row"><label>⭐ Доп. баллы тренировки</label><input type="number" class="calc-input" id="train_extra" placeholder="Количество баллов"></div>
       </div>
     </div>
 
@@ -410,41 +427,40 @@
     <div class="card">
       <div class="card-header"><h3>💊 Медицинские услуги</h3><span class="tag">📸 скрины</span></div>
       <div class="card-body">
-        <div class="input-row"><label>🚑 ПМП (день) ×3</label><input type="number" inputmode="numeric" id="pmp"></div> 
-        <div class="input-row"><label>🌙 ПМП (ночь) ×4</label><input type="number" inputmode="numeric" id="pmp_night"></div>
+        <div class="input-row"><label>🚑 ПМП (день) ×3</label><input type="number" class="calc-input" id="pmp"></div> 
+        <div class="input-row"><label>🌙 ПМП (ночь) ×4</label><input type="number" class="calc-input" id="pmp_night"></div>
       </div>
     </div>
 
-    <!-- ПРОЧЕЕ (таблетки, вакцины) -->
+    <!-- ПРОЧЕЕ -->
     <div class="card">
       <div class="card-header"><h3>💉 Фармацевтика & карты</h3><span class="tag">скрины</span></div>
       <div class="card-body">
-        <div class="input-row"><label>💊 Таблетки ELSH (×1)</label><input id="pill1" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>💊 Таблетки Сенди/Палето (×2)</label><input id="pill2" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>🧪 Вакцины ELSH (×1)</label><input id="vac1" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>🧪 Вакцины Сенди/Палето (×2)</label><input id="vac2" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>📇 Мед. карты ELSH (×2)</label><input id="card1" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>📇 Мед. карты Сенди/Палето (×3)</label><input id="card2" type="number" inputmode="numeric"></div>
+        <div class="input-row"><label>💊 Таблетки ELSH (×1)</label><input type="number" class="calc-input" id="pill1"></div>
+        <div class="input-row"><label>💊 Таблетки Сенди/Палето (×2)</label><input type="number" class="calc-input" id="pill2"></div>
+        <div class="input-row"><label>🧪 Вакцины ELSH (×1)</label><input type="number" class="calc-input" id="vac1"></div>
+        <div class="input-row"><label>🧪 Вакцины Сенди/Палето (×2)</label><input type="number" class="calc-input" id="vac2"></div>
+        <div class="input-row"><label>📇 Мед. карты ELSH (×2)</label><input type="number" class="calc-input" id="card1"></div>
+        <div class="input-row"><label>📇 Мед. карты Сенди/Палето (×3)</label><input type="number" class="calc-input" id="card2"></div>
       </div>
     </div>
 
-    <!-- АКТИВНОСТИ & ОБУЧЕНИЕ (Лекции и Мероприятия удалены) -->
+    <!-- АКТИВНОСТИ -->
     <div class="card">
       <div class="card-header"><h3>📚 Активности & обучение</h3><span class="tag">📸 скриншоты</span></div>
       <div class="card-body">
-        <div class="input-row"><label>🎓 Получение квалификации (×50)</label><input id="qual" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>🎭 RP работа (×50)</label><input id="rp" type="number" inputmode="numeric"></div>
-        <div class="input-row"><label>🗣️ Собеседования (×20)</label><input id="interview" type="number" inputmode="numeric"></div>
-        <!-- Пункты "Лекции (×10)" и "Мероприятия (×50)" полностью удалены -->
+        <div class="input-row"><label>🎓 Получение квалификации (×50)</label><input type="number" class="calc-input" id="qual"></div>
+        <div class="input-row"><label>🎭 RP работа (×50)</label><input type="number" class="calc-input" id="rp"></div>
+        <div class="input-row"><label>🗣️ Собеседования (×20)</label><input type="number" class="calc-input" id="interview"></div>
       </div>
     </div>
 
-    <!-- ДЕЖУРСТВО минуты -->
+    <!-- ДЕЖУРСТВО -->
     <div class="card">
       <div class="card-header"><h3>⏱ Дежурство (минуты → авто-баллы)</h3><span class="tag">учет каждые 30 мин</span></div>
       <div class="card-body">
-        <div class="input-row"><label>🚒 ELSH (минуты)</label><input id="duty1" type="number" inputmode="numeric" placeholder="мин"></div>
-        <div class="input-row"><label>🛡️ S&S (минуты)</label><input id="duty2" type="number" inputmode="numeric" placeholder="мин"></div>
+        <div class="input-row"><label>🚒 ELSH (минуты)</label><input type="number" class="calc-input" id="duty1" placeholder="мин"></div>
+        <div class="input-row"><label>🛡️ S&S (минуты)</label><input type="number" class="calc-input" id="duty2" placeholder="мин"></div>
       </div>
     </div>
 
@@ -453,59 +469,63 @@
       <div class="card">
         <div class="card-header"><h3>🍽 Обед + доп. баллы</h3><span class="tag">⭐ дополнительные баллы</span></div>
         <div class="card-body">
-          <div class="input-row"><label>⭐ Баллы за обед + доп. баллы</label><input id="lunch_staff" type="number" inputmode="numeric" placeholder="введите сумму"></div>
+          <div class="input-row"><label>⭐ Баллы за обед + доп. баллы</label><input type="number" class="calc-input" id="lunch_staff" placeholder="введите сумму"></div>
         </div>
       </div>
     </div>
 
-    <!-- БЛОК ИНСТРУКТОРА (скрыт по умолчанию) -->
+    <!-- БЛОК ИНСТРУКТОРА -->
     <div id="inst_block" class="hidden">
       <div class="card">
         <div class="card-header"><h3>👨‍🚒 Инструкторская деятельность</h3><span class="tag">📸 фотоотчет</span></div>
         <div class="card-body">
-          <div class="input-row"><label>📄 Проверка отчёта (×20)</label><input id="inst_check_report" type="number" inputmode="numeric"></div>
-          <div class="input-row"><label>🎙️ Инструктаж (×35)</label><input id="inst_briefing" type="number" inputmode="numeric"></div>
-          <div class="input-row"><label>🔍 Проведение проверки (×50)</label><input id="inst_check_run" type="number" inputmode="numeric"></div>
-          <div class="input-row"><label>🏋️ Проведение тренировки (×40)</label><input id="inst_training" type="number" inputmode="numeric"></div>
-          <div class="input-row"><label>👨‍🎓 Обучение стажера (×20)</label><input id="inst_intern" type="number" inputmode="numeric"></div>
+          <div class="input-row"><label>📄 Проверка отчёта (×20)</label><input type="number" class="calc-input" id="inst_check_report"></div>
+          <div class="input-row"><label>🎙️ Инструктаж (×35)</label><input type="number" class="calc-input" id="inst_briefing"></div>
+          <div class="input-row"><label>🔍 Проведение проверки (×50)</label><input type="number" class="calc-input" id="inst_check_run"></div>
+          <div class="input-row"><label>🏋️ Проведение тренировки (×40)</label><input type="number" class="calc-input" id="inst_training"></div>
+          <div class="input-row"><label>👨‍🎓 Обучение стажера (×20)</label><input type="number" class="calc-input" id="inst_intern"></div>
         </div>
       </div>
       <div class="card">
         <div class="card-header"><h3>🍽 Обед (инструктор)</h3><span class="tag">⭐ доп баллы</span></div>
         <div class="card-body">
-          <div class="input-row"><label>⭐ Баллы обеда/бонус</label><input id="lunch_inst" type="number" inputmode="numeric"></div>
+          <div class="input-row"><label>⭐ Баллы обеда/бонус</label><input type="number" class="calc-input" id="lunch_inst"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <button onclick="calc()">🧯 РАССЧИТАТЬ ОТЧЕТ 🧯</button>
+  <button onclick="window.calc()">🧯 РАССЧИТАТЬ ОТЧЕТ 🧯</button>
   <div class="result" id="res">
     🔥 Пожарка: 0<br>📊 Остальное: 0<br>⏱ Дежурство: 0<br>👨‍🚒 Инструктор: 0<br>🍽 Обед+доп: 0<br><br>💯 ИТОГО: 0<br><br>✅ Введите данные и нажмите Рассчитать
   </div>
 
-  <!-- НОВАЯ СЕКЦИЯ: ЛУЧШИЙ СОТРУДНИК НЕДЕЛИ -->
+  <!-- СЕКЦИЯ: ЛУЧШИЙ СОТРУДНИК НЕДЕЛИ -->
   <div class="best-employee-section">
     <div class="card">
       <div class="card-header">
         <h3>🏆 Лучший сотрудник недели</h3>
-        <span class="tag">таблица на 18 сотрудников</span>
+        <span class="tag">впишите баллы для каждого</span>
       </div>
       <div class="card-body">
-        <!-- Таблица -->
+        <div class="table-controls">
+          <button class="small-btn" onclick="window.addEmployee()">➕ Добавить сотрудника</button>
+          <button class="small-btn clear-scores-btn" onclick="window.clearAllScores()">🔄 Очистить баллы</button>
+        </div>
+        
         <table class="employee-table" id="employeeTable">
           <thead>
-            <tr><th>👤 Имя сотрудника</th><th>⭐ Баллы</th></tr>
+            <tr><th>👤 Имя сотрудника</th><th>⭐ Баллы <span style="font-size:0.7rem; opacity:0.7;">(впишите баллы)</span></th><th style="width:50px"></th></tr>
           </thead>
-          <tbody id="employeeTableBody">
-            <!-- 18 строк будут сгенерированы через JS -->
-          </tbody>
+          <tbody id="employeeTableBody"></tbody>
         </table>
         
-        <!-- Только одна кнопка -->
-        <button class="calc-best-btn" onclick="calculateBestEmployee()">🏆 РАССЧИТАТЬ ЛУЧШЕГО 🏆</button>
+        <button class="calc-best-btn" onclick="window.calculateBestEmployee()">🏆 РАССЧИТАТЬ ЛУЧШЕГО 🏆</button>
         
-        <!-- Результат -->
+        <div class="save-status" id="saveStatus">
+          💾 Данные автоматически сохраняются
+        </div>
+        
         <div id="bestEmployeeResult" class="best-employee-result hidden">
           <div class="winner-crown">👑</div>
           <div>Лучший сотрудник недели:</div>
@@ -518,65 +538,189 @@
 </div>
 
 <script>
-// Функции для работы с таблицей сотрудников
-const EMPLOYEE_ROWS = 18;
+// Ключи для localStorage
+const CALC_STORAGE_KEY = 'lsfd_calculator_data';
+const EMPLOYEES_STORAGE_KEY = 'lsfd_employees_data';
 
-function createEmployeeTable() {
+// ========== СОХРАНЕНИЕ ДАННЫХ КАЛЬКУЛЯТОРА ==========
+function saveCalculatorData() {
+  const inputs = document.querySelectorAll('.calc-input');
+  const data = {};
+  inputs.forEach(input => {
+    if (input.id) {
+      data[input.id] = input.value;
+    }
+  });
+  data['role'] = document.getElementById('role').value;
+  localStorage.setItem(CALC_STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadCalculatorData() {
+  const saved = localStorage.getItem(CALC_STORAGE_KEY);
+  if (!saved) return;
+  
+  try {
+    const data = JSON.parse(saved);
+    for (const [id, value] of Object.entries(data)) {
+      const element = document.getElementById(id);
+      if (element && element.tagName === 'INPUT') {
+        element.value = value;
+      } else if (id === 'role') {
+        const roleSelect = document.getElementById('role');
+        if (roleSelect) roleSelect.value = value;
+      }
+    }
+  } catch(e) {
+    console.error('Ошибка загрузки данных калькулятора:', e);
+  }
+}
+
+// ========== РАБОТА С СОТРУДНИКАМИ ==========
+let employees = [];
+
+function saveEmployees() {
+  localStorage.setItem(EMPLOYEES_STORAGE_KEY, JSON.stringify(employees));
+  const statusDiv = document.getElementById('saveStatus');
+  if (statusDiv) {
+    statusDiv.textContent = '✅ Сохранено! ' + new Date().toLocaleTimeString();
+    setTimeout(() => {
+      if (statusDiv) statusDiv.textContent = '💾 Данные автоматически сохраняются';
+    }, 2000);
+  }
+}
+
+function loadEmployees() {
+  const saved = localStorage.getItem(EMPLOYEES_STORAGE_KEY);
+  if (saved) {
+    try {
+      employees = JSON.parse(saved);
+    } catch(e) {
+      employees = [];
+    }
+  }
+  if (!employees || employees.length === 0) {
+    // Примеры с пустыми баллами (без 0)
+    employees = [
+      { name: 'Иванов Иван', score: null },
+      { name: 'Петров Петр', score: null },
+      { name: 'Сидоров Алексей', score: null }
+    ];
+  }
+  renderEmployeeTable();
+}
+
+function renderEmployeeTable() {
   const tbody = document.getElementById('employeeTableBody');
   if (!tbody) return;
   
   tbody.innerHTML = '';
-  for (let i = 0; i < EMPLOYEE_ROWS; i++) {
+  
+  for (let i = 0; i < employees.length; i++) {
+    const emp = employees[i];
     const row = tbody.insertRow();
-    const cell1 = row.insertCell(0);
-    const cell2 = row.insertCell(1);
     
+    // Ячейка с именем
+    const nameCell = row.insertCell(0);
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
-    nameInput.placeholder = `Сотрудник ${i + 1}`;
-    nameInput.id = `emp_name_${i}`;
-    nameInput.autocomplete = 'off';
+    nameInput.value = emp.name;
+    nameInput.placeholder = 'ФИО сотрудника';
+    nameInput.style.width = '100%';
+    nameInput.addEventListener('input', ((index) => {
+      return function(e) {
+        employees[index].name = e.target.value;
+        saveEmployees();
+      };
+    })(i));
+    nameCell.appendChild(nameInput);
     
+    // Ячейка с баллами - пустая, без значения по умолчанию
+    const scoreCell = row.insertCell(1);
     const scoreInput = document.createElement('input');
     scoreInput.type = 'number';
-    scoreInput.placeholder = '0';
-    scoreInput.id = `emp_score_${i}`;
-    scoreInput.value = '0';
+    // Важно: если score === null или 0, оставляем пустым
+    scoreInput.value = (emp.score !== null && emp.score !== 0 && emp.score !== '') ? emp.score : '';
+    scoreInput.placeholder = 'впишите баллы';
+    scoreInput.style.width = '100%';
+    scoreInput.addEventListener('input', ((index) => {
+      return function(e) {
+        const val = e.target.value;
+        // Если поле пустое - сохраняем null, иначе число
+        employees[index].score = val === '' ? null : parseInt(val) || 0;
+        saveEmployees();
+      };
+    })(i));
+    scoreCell.appendChild(scoreInput);
     
-    cell1.appendChild(nameInput);
-    cell2.appendChild(scoreInput);
+    // Ячейка с кнопкой удаления
+    const actionCell = row.insertCell(2);
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '❌';
+    deleteBtn.className = 'del-btn';
+    deleteBtn.onclick = ((index) => {
+      return function() {
+        if (confirm(`Удалить сотрудника "${employees[index].name || (index+1)}"?`)) {
+          employees.splice(index, 1);
+          saveEmployees();
+          renderEmployeeTable();
+          const resultDiv = document.getElementById('bestEmployeeResult');
+          if (resultDiv) resultDiv.classList.add('hidden');
+        }
+      };
+    })(i);
+    actionCell.appendChild(deleteBtn);
   }
 }
 
-function getEmployeeData() {
-  const employees = [];
-  for (let i = 0; i < EMPLOYEE_ROWS; i++) {
-    const nameInput = document.getElementById(`emp_name_${i}`);
-    const scoreInput = document.getElementById(`emp_score_${i}`);
-    const name = nameInput ? nameInput.value.trim() : '';
-    const score = scoreInput ? (parseInt(scoreInput.value) || 0) : 0;
+function addEmployee() {
+  employees.push({ name: '', score: null });
+  saveEmployees();
+  renderEmployeeTable();
+}
+
+function clearAllScores() {
+  if (confirm('⚠️ ВНИМАНИЕ! Это очистит баллы у ВСЕХ сотрудников, но имена останутся. Продолжить?')) {
+    for (let i = 0; i < employees.length; i++) {
+      employees[i].score = null;
+    }
+    saveEmployees();
+    renderEmployeeTable();
+    const resultDiv = document.getElementById('bestEmployeeResult');
+    if (resultDiv) resultDiv.classList.add('hidden');
     
-    if (name) {
-      employees.push({ name, score });
+    const statusDiv = document.getElementById('saveStatus');
+    if (statusDiv) {
+      statusDiv.textContent = '🔄 Баллы очищены!';
+      setTimeout(() => {
+        if (statusDiv) statusDiv.textContent = '💾 Данные автоматически сохраняются';
+      }, 2000);
     }
   }
-  return employees;
 }
 
 function calculateBestEmployee() {
-  const employees = getEmployeeData();
-  
   if (employees.length === 0) {
-    alert('❌ Нет данных о сотрудниках! Заполните таблицу.');
+    alert('❌ Нет данных о сотрудниках! Добавьте сотрудников через кнопку "Добавить сотрудника"');
+    return;
+  }
+  
+  // Фильтруем сотрудников: есть имя И есть баллы (не null и не пусто)
+  const validEmployees = employees.filter(emp => {
+    return emp.name && emp.name.trim() !== '' && emp.score !== null && emp.score !== '';
+  });
+  
+  if (validEmployees.length === 0) {
+    alert('❌ Нет сотрудников с заполненными именем и баллами! Введите баллы для сотрудников.');
     return;
   }
   
   let bestEmployee = null;
   let maxScore = -1;
   
-  for (const emp of employees) {
-    if (emp.score > maxScore) {
-      maxScore = emp.score;
+  for (const emp of validEmployees) {
+    const score = typeof emp.score === 'number' ? emp.score : parseInt(emp.score) || 0;
+    if (score > maxScore) {
+      maxScore = score;
       bestEmployee = emp;
     }
   }
@@ -585,26 +729,21 @@ function calculateBestEmployee() {
   const winnerNameSpan = document.getElementById('winnerName');
   const winnerScoreSpan = document.getElementById('winnerScore');
   
-  if (bestEmployee && maxScore > 0) {
-    winnerNameSpan.textContent = bestEmployee.name;
-    winnerScoreSpan.textContent = `${bestEmployee.score} баллов`;
+  if (bestEmployee) {
+    winnerNameSpan.textContent = bestEmployee.name.trim();
+    if (maxScore > 0) {
+      winnerScoreSpan.textContent = maxScore + ' баллов';
+    } else {
+      winnerScoreSpan.textContent = '0 баллов (нужно больше активности!)';
+    }
     resultDiv.classList.remove('hidden');
-    
-    // Прокрутка к результату
     resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    
-  } else if (bestEmployee && maxScore === 0) {
-    winnerNameSpan.textContent = bestEmployee.name;
-    winnerScoreSpan.textContent = `0 баллов (нужно больше активности!)`;
-    resultDiv.classList.remove('hidden');
-  } else {
-    alert('❌ Нет сотрудников с положительными баллами!');
   }
 }
 
-// Остальные функции
+// ========== ОСНОВНЫЕ ФУНКЦИИ КАЛЬКУЛЯТОРА ==========
 function get(id){
-    return +document.getElementById(id).value || 0;
+    return +document.getElementById(id)?.value || 0;
 }
 
 function duty(min, rate){
@@ -613,12 +752,11 @@ function duty(min, rate){
 
 function toggleRole(){
     let role = document.getElementById("role").value;
-
-    document.getElementById("inst_block")
-        .classList.toggle("hidden", role !== "inst");
-
-    document.getElementById("staff_lunch_block")
-        .classList.toggle("hidden", role !== "staff");
+    const instBlock = document.getElementById("inst_block");
+    const staffLunchBlock = document.getElementById("staff_lunch_block");
+    
+    if (instBlock) instBlock.classList.toggle("hidden", role !== "inst");
+    if (staffLunchBlock) staffLunchBlock.classList.toggle("hidden", role !== "staff");
 }
 
 function calc(){
@@ -634,7 +772,6 @@ function calc(){
   get("train") * 20 +
   get("train_extra");
 
-  // Внимание: лекции (lecture) и мероприятия (event) удалены из раздела активностей
   let other =
   get("pmp") * 3 +
   get("pmp_night") * 4 +
@@ -647,7 +784,6 @@ function calc(){
   get("qual") * 50 +
   get("rp") * 50 +
   get("interview") * 20;
-  // Лекции (×10) и Мероприятия (×50) полностью исключены из расчетов
 
   let duty_points =
   duty(get("duty1"), 20) +
@@ -693,26 +829,51 @@ function calc(){
   let ok = errors.length === 0;
 
   let resultHtml = 
-  `<span style="font-size:1.05rem;">🔥 Пожарная деятельность:</span> <strong style="color:#ff9966;">${fire} баллов</strong><br>
-  <span>📊 Медицина + Прочее + Активности (квалификация, RP, собеседования):</span> <strong>${other} баллов</strong><br>
-  <span>⏱ Дежурство (ELSH/S&S):</span> <strong>${duty_points} баллов</strong><br>
-  <span>👨‍🚒 Инструкторская часть:</span> <strong>${inst} баллов</strong><br>
-  <span>🍽 Обед + дополнительные баллы:</span> <strong>${lunch} баллов</strong><br>
-  <hr style="margin:12px 0; border-color:#ff6a48;">
-  <span style="font-size:1.2rem;">💯 ИТОГОВЫЙ БАЛЛ:</span> <strong style="font-size:1.5rem; color:#ffaa77;">${total}</strong><br><br>`;
+  '<span style="font-size:1.05rem;">🔥 Пожарная деятельность:</span> <strong style="color:#ff9966;">' + fire + ' баллов</strong><br>' +
+  '<span>📊 Медицина + Прочее + Активности:</span> <strong>' + other + ' баллов</strong><br>' +
+  '<span>⏱ Дежурство (ELSH/S&S):</span> <strong>' + duty_points + ' баллов</strong><br>' +
+  '<span>👨‍🚒 Инструкторская часть:</span> <strong>' + inst + ' баллов</strong><br>' +
+  '<span>🍽 Обед + дополнительные баллы:</span> <strong>' + lunch + ' баллов</strong><br>' +
+  '<hr style="margin:12px 0; border-color:#ff6a48;">' +
+  '<span style="font-size:1.2rem;">💯 ИТОГОВЫЙ БАЛЛ:</span> <strong style="font-size:1.5rem; color:#ffaa77;">' + total + '</strong><br><br>';
 
   if(ok){
-      resultHtml += `<div style="background:#1e5a2e60; border-left: 6px solid #47d47c; padding:12px 16px; border-radius:20px;">✅ <strong style="color:#b3ffcf;">ОТЧЕТ ГОТОВ К СДАЧЕ</strong><br>Все критерии выполнены, баллы соответствуют нормативам LSFD.</div>`;
+      resultHtml += '<div style="background:#1e5a2e60; border-left: 6px solid #47d47c; padding:12px 16px; border-radius:20px;">✅ <strong style="color:#b3ffcf;">ОТЧЕТ ГОТОВ К СДАЧЕ</strong><br>Все критерии выполнены, баллы соответствуют нормативам LSFD.</div>';
   } else {
-      resultHtml += `<div style="background:#3a1710; border-left: 6px solid #e64a2e; padding:12px 16px; border-radius:20px;">❌ <strong style="color:#ff8a6f;">Ошибки / недочеты:</strong><br>${errors.join("<br>")}</div>`;
+      resultHtml += '<div style="background:#3a1710; border-left: 6px solid #e64a2e; padding:12px 16px; border-radius:20px;">❌ <strong style="color:#ff8a6f;">Ошибки / недочеты:</strong><br>' + errors.join('<br>') + '</div>';
   }
 
   document.getElementById("res").innerHTML = resultHtml;
+  
+  // Сохраняем данные после расчета
+  saveCalculatorData();
 }
 
-// Инициализация
-createEmployeeTable();
-toggleRole();
+// ========== ИНИЦИАЛИЗАЦИЯ ==========
+// Привязываем функции к window для доступа из onclick
+window.calc = calc;
+window.addEmployee = addEmployee;
+window.clearAllScores = clearAllScores;
+window.calculateBestEmployee = calculateBestEmployee;
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Загружаем данные калькулятора
+  loadCalculatorData();
+  // Загружаем сотрудников
+  loadEmployees();
+  // Настраиваем автосохранение для полей калькулятора
+  const inputs = document.querySelectorAll('.calc-input');
+  inputs.forEach(input => {
+    input.addEventListener('input', () => saveCalculatorData());
+    input.addEventListener('change', () => saveCalculatorData());
+  });
+  // Настраиваем переключение роли
+  document.getElementById('role').addEventListener('change', () => {
+    saveCalculatorData();
+    toggleRole();
+  });
+  toggleRole();
+});
 </script>
 </body>
 </html>
